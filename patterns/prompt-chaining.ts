@@ -1,5 +1,6 @@
 import { openai } from "@ai-sdk/openai";
 import { generateText } from "ai";
+import "dotenv/config";
 
 const model = openai("gpt-4o");
 
@@ -29,3 +30,15 @@ ${commit}`,
 
 	return commit;
 }
+
+const testDiffWithoutPrefixLongEnough = `\
+diff --git a/config.yaml b/config.yaml
+index e69de29..e8a4ef4 100644
+--- a/config.yaml
++++ b/config.yaml
+@@ -0,0 +1 @@
++enableFeatureX: true
+`;
+
+console.log("\n--- Testing diff without prefix (but long enough) ---");
+generateCommitMessage(testDiffWithoutPrefixLongEnough).then(console.log);

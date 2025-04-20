@@ -1,6 +1,7 @@
 import { openai } from "@ai-sdk/openai";
 import { generateText, generateObject } from "ai";
 import { z } from "zod";
+import "dotenv/config";
 
 const model = openai("gpt-4o");
 
@@ -42,3 +43,9 @@ ${JSON.stringify(allReviews, null, 2)}`,
 
 	return { reviews: allReviews, summary };
 }
+
+reviewCode(`
+function sortUsersByAge(users: { name: string; age: number }[]): { name: string; age: number }[] {
+  return users.sort((a, b) => a.age - b.age);
+}
+`).then(console.log);

@@ -1,20 +1,23 @@
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
+import "dotenv/config";
+
+const planSchema = z.object({
+	files: z.array(
+		z.object({
+			purpose: z.string(),
+			filePath: z.string(),
+			changeType: z.enum(["create", "modify", "delete"]),
+		})
+	),
+	estimatedComplexity: z.enum(["low", "medium", "high"]),
+});
 
 export async function implementFeature(featureRequest: string) {
 	const { object: plan } = await generateObject({
 		model: openai("o3-mini"),
-		schema: z.object({
-			files: z.array(
-				z.object({
-					purpose: z.string(),
-					filePath: z.string(),
-					changeType: z.enum(["create", "modify", "delete"]),
-				})
-			),
-			estimatedComplexity: z.enum(["low", "medium", "high"]),
-		}),
+		schema: planSchema,
 		system:
 			"You are a senior software architect creating implementation plans.",
 		prompt: `Plan the implementation for this feature request:
@@ -48,3 +51,7 @@ Feature context: ${featureRequest}`,
 		changes,
 	};
 }
+
+implementFeature(
+	"Add a new feature to the app that allows users to add a new task to the list."
+).then(console.log);

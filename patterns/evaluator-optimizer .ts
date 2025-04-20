@@ -1,6 +1,7 @@
 import { openai } from "@ai-sdk/openai";
 import { generateText, generateObject } from "ai";
 import { z } from "zod";
+import "dotenv/config";
 
 export async function improveComment(code: string) {
 	let comment = "";
@@ -67,3 +68,19 @@ ${evaluation.suggestions.join("\n")}`,
 		iterations,
 	};
 }
+
+improveComment(`
+async function fetchUserData(userId: string): Promise<any | null> { // Using 'any' for simplicity here
+  try {
+    const response = await fetch(\`/api/users/\${userId}\`);
+    if (!response.ok) {
+      console.error(\`HTTP error! status: \${response.status}\`);
+      return null;
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+    return null;
+  }
+}
+`).then(console.log);
