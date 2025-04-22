@@ -3,7 +3,10 @@
 ## Setup
 
 1.  **Install Dependencies:** Run `pnpm install` in the project root to install all necessary packages.
-2.  **Create Environment File:** Create a `.env` file in the root directory of this project.
+2.  **Setup Environment File:** Copy or rename the `.env.example` file to `.env` in the root directory. You can use the following command:
+    ```bash
+    mv .env.example .env
+    ```
 3.  **Add API Keys:** Populate the `.env` file with the necessary API keys for the services you intend to use (e.g., OpenAI, Anthropic, Gemini). It should look something like this:
 
     ```dotenv

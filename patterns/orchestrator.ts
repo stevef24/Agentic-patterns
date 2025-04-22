@@ -37,9 +37,9 @@ export async function implementFeature(featureRequest: string) {
 				system: promptType,
 				schema: z.object({ explanation: z.string(), code: z.string() }),
 				prompt: `Please implement the following for file: ${file.filePath}
-Purpose: ${file.purpose}
+										Purpose: ${file.purpose}
 
-Feature context: ${featureRequest}`,
+										Feature context: ${featureRequest}`,
 			});
 
 			return { file, implementation };
